@@ -5,7 +5,7 @@ import com.example.layeredarchitecture.model.OrderDTO;
 
 import java.sql.*;
 
-public class PlaceOrderDAOImpl {
+public class PlaceOrderDAOImpl implements  PlaceOrderDAO{
     public String generateNewOrderId() throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         Statement stm = connection.createStatement();

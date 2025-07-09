@@ -1,9 +1,6 @@
 package com.example.layeredarchitecture.controller;
 
-import com.example.layeredarchitecture.dao.CustomerDAOImpl;
-import com.example.layeredarchitecture.dao.ItemDAOImpl;
-import com.example.layeredarchitecture.dao.OrderDetailDAOImpl;
-import com.example.layeredarchitecture.dao.PlaceOrderDAOImpl;
+import com.example.layeredarchitecture.dao.*;
 import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.CustomerDTO;
 import com.example.layeredarchitecture.model.ItemDTO;
@@ -54,6 +51,11 @@ public class PlaceOrderFormController {
     public Label lblDate;
     public Label lblTotal;
     private String orderId;
+
+    private PlaceOrderDAO placeOrderDAO=new PlaceOrderDAOImpl();
+    private CustomerDAO customerDAO=new CustomerDAOImpl();
+    private ItemDAO itemDAO=new ItemDAOImpl();
+    OrderDetailDAO orderDetailDAO=new OrderDetailDAOImpl();
 
     public void initialize() throws SQLException, ClassNotFoundException {
 
@@ -106,7 +108,6 @@ public class PlaceOrderFormController {
                             new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + newValue + "").show();
                         }
 
-                        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
                         CustomerDTO customerDTO = customerDAO.searchCustomer(newValue);
 
                         txtCustomerName.setText(customerDTO.getName());
@@ -134,8 +135,7 @@ public class PlaceOrderFormController {
                     if (!existItem(newItemCode + "")) {
 //                        throw new NotFoundException("There is no such item associated with the id " + code);
                     }
-                    ItemDAOImpl itemImpl = new ItemDAOImpl();
-                    ItemDTO item = itemImpl.searchItem(newItemCode);
+                    ItemDTO item = itemDAO.searchItem(newItemCode);
 
                     txtDescription.setText(item.getDescription());
                     txtUnitPrice.setText(item.getUnitPrice().setScale(2).toString());
@@ -180,18 +180,16 @@ public class PlaceOrderFormController {
     }
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-       PlaceOrderDAOImpl placeOrderDAO=new PlaceOrderDAOImpl();
        return placeOrderDAO.existItem(code);
     }
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-       PlaceOrderDAOImpl placeOrderDAO=new PlaceOrderDAOImpl();
+
        return placeOrderDAO.existCustomer(id);
     }
 
     public String generateNewOrderId() {
         try {
-            PlaceOrderDAOImpl placeOrderDAO = new PlaceOrderDAOImpl();
             String nextID = placeOrderDAO.generateNewOrderId();
             return nextID;
 
@@ -205,7 +203,6 @@ public class PlaceOrderFormController {
 
     private void loadAllCustomerIds() {
         try {
-            CustomerDAOImpl customerDAO = new CustomerDAOImpl();
             ArrayList<CustomerDTO> customerDTOS = customerDAO.getAllCustomer();
             for (CustomerDTO customerDTO : customerDTOS) {
                 cmbCustomerId.getItems().add(customerDTO.getId());
@@ -221,7 +218,6 @@ public class PlaceOrderFormController {
 
     private void loadAllItemCodes() {
         try {
-            ItemDAOImpl itemDAO = new ItemDAOImpl();
             ArrayList<ItemDTO> itemDTOS = itemDAO.getAllItems();
             for (ItemDTO itemDTO : itemDTOS) {
                 cmbItemCode.getItems().add(itemDTO.getCode());
@@ -327,7 +323,6 @@ public class PlaceOrderFormController {
             connection.setAutoCommit(false); // Begin transaction
 
 
-            PlaceOrderDAOImpl placeOrderDAO = new PlaceOrderDAOImpl();
             if (!placeOrderDAO.saveOrder(new OrderDTO(orderId, orderDate, customerId))) {
                 connection.rollback();
                 connection.setAutoCommit(true);
@@ -335,7 +330,7 @@ public class PlaceOrderFormController {
             }
 
 
-            OrderDetailDAOImpl orderDetailDAO = new OrderDetailDAOImpl();
+
             if (!orderDetailDAO.saveOrderDetails(orderId, orderDetails)) {
                 connection.rollback();
                 connection.setAutoCommit(true);
@@ -372,7 +367,6 @@ public class PlaceOrderFormController {
 
     public ItemDTO findItem(String code) {
         try {
-          ItemDAOImpl itemDAO=new ItemDAOImpl();
           return itemDAO.findItem(code);
         } catch (SQLException e) {
             throw new RuntimeException("Failed to find the Item " + code, e);
