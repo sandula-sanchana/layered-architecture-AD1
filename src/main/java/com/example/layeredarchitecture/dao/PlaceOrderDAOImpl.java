@@ -22,4 +22,14 @@ public class PlaceOrderDAOImpl {
         return stm.executeUpdate()>0;
     }
 
+    public boolean existCustomer(String code) throws SQLException, ClassNotFoundException {
+        CustomerDAOImpl customerDAO=new CustomerDAOImpl();
+        return customerDAO.existCustomer(code);
+    }
+
+    public boolean existItem(String code) throws SQLException, ClassNotFoundException {
+        ItemDAOImpl itemDAO=new ItemDAOImpl();
+        return itemDAO.existItem(code);
+    }
+
 }
