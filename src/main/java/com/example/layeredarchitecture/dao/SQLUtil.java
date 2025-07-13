@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class SQLUtil {
+    @SuppressWarnings("unchecked")
    public static <T> T execute(String sql,Object... obj) throws SQLException, ClassNotFoundException {
        Connection connection= DBConnection.getDbConnection().getConnection();
        PreparedStatement statement=connection.prepareStatement(sql);
@@ -18,7 +19,8 @@ public class SQLUtil {
            return  (T)statement.executeQuery();
 
        }else {
-           return  (T)(Boolean) (statement.executeUpdate()>0);
+           boolean success = statement.executeUpdate() > 0;
+           return (T)(Boolean) success;
        }
    }
 }

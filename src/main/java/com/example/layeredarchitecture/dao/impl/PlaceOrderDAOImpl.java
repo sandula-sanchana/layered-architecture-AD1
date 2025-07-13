@@ -7,6 +7,7 @@ import com.example.layeredarchitecture.model.OrderDTO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class PlaceOrderDAOImpl implements PlaceOrderDAO {
 
@@ -42,5 +43,40 @@ public class PlaceOrderDAOImpl implements PlaceOrderDAO {
     public boolean existItem(String code) throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.execute("SELECT code FROM Item WHERE code=?", code);
         return rst.next();
+    }
+
+    @Override
+    public ArrayList<OrderDTO> getAll() throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public boolean save(OrderDTO customerDTO) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean update(OrderDTO customerDTO) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean exist(String id) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String id) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public String generateNewId() throws SQLException, ClassNotFoundException {
+        return "";
+    }
+
+    @Override
+    public OrderDTO search(String newValue) throws SQLException, ClassNotFoundException {
+        return null;
     }
 }
