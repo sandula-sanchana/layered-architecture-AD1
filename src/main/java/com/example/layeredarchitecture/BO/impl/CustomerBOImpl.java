@@ -19,4 +19,26 @@ public class CustomerBOImpl implements CustomerBO {
     public boolean saveCus(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
        return customerDAO.save(customerDTO);
     }
+
+    @Override
+    public boolean updateCUs(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
+        return customerDAO.update(customerDTO);
+    }
+
+    @Override
+    public boolean deleteCUs(String id) throws SQLException, ClassNotFoundException {
+        return customerDAO.delete(id);
+    }
+
+    @Override
+    public boolean existCus(String id) throws SQLException, ClassNotFoundException {
+        return  customerDAO.exist(id);
+    }
+
+    @Override
+    public String generateNewCusId() throws SQLException, ClassNotFoundException {
+        return "";
+    }
+
+
 }
