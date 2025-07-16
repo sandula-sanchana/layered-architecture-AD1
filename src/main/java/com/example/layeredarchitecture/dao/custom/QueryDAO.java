@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface QueryDAO {
      public List<CustomDTO> getAllCustomersByOrderCount() throws SQLException ;
+    List<CustomDTO> getAllCustomersItem() throws SQLException, ClassNotFoundException;
 }
