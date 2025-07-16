@@ -12,4 +12,5 @@ public interface CustomerBO {
     public boolean deleteCUs(String id) throws  SQLException,ClassNotFoundException;
     public boolean existCus(String id) throws  SQLException,ClassNotFoundException;
     public String generateNewCusId() throws SQLException, ClassNotFoundException ;
+    public CustomerDTO searchCus(String newValue) throws SQLException, ClassNotFoundException ;
 }

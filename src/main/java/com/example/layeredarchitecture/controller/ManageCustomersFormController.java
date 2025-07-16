@@ -2,6 +2,7 @@ package com.example.layeredarchitecture.controller;
 
 import com.example.layeredarchitecture.BO.CustomerBO;
 import com.example.layeredarchitecture.BO.impl.CustomerBOImpl;
+import com.example.layeredarchitecture.dao.DAOFactory;
 import com.example.layeredarchitecture.dao.custom.CustomerDAO;
 import com.example.layeredarchitecture.dao.impl.CustomerDAOImpl;
 import com.example.layeredarchitecture.model.CustomerDTO;
@@ -40,7 +41,7 @@ public class ManageCustomersFormController {
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
 
-    private CustomerBO customerBO=new CustomerBOImpl();
+    private CustomerBO customerBO= (CustomerBO) DAOFactory.getObject().getDAO(DAOFactory.DAOTypes.CUSTOMER);
 
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
