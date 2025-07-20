@@ -1,5 +1,6 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.BO.BOFactory;
 import com.example.layeredarchitecture.BO.PlaceOrderBO;
 import com.example.layeredarchitecture.BO.impl.PlaceOrderBOImpl;
 import com.example.layeredarchitecture.dao.custom.CustomerDAO;
@@ -61,9 +62,9 @@ public class PlaceOrderFormController {
     public Label lblTotal;
     private String orderId;
 
-    OrderDetailDAO orderDetailDAO=new OrderDetailDAOImpl();
+    //OrderDetailDAO orderDetailDAO=new OrderDetailDAOImpl();
 
-    PlaceOrderBO placeOrderBO=new PlaceOrderBOImpl();
+    PlaceOrderBO placeOrderBO=(PlaceOrderBO) BOFactory.getInstance().getBO(BOFactory.BOType.PLACE_ORDER);
 
     public void initialize() throws SQLException, ClassNotFoundException {
 
